@@ -2,41 +2,37 @@
 
 include 'connect.php';
 
-$pre_text = "Tiaka compañeros
-Ti pashialoti Maria
-Ti mo youaloske iuan tonantsi
-Santa María Guadalupe
+//spanish to nahuatl
+if (isset($_POST['pre_text'])){
 
-Tiaka compañeros
-Ti pashialoti Maria
-Ti mo youaloske iuan tonantsi
-Santa María Guadalupe ";
+    $pre_text = $_POST['pre_text'];
 
-$translation = "";
+    $translation = "";
 
-$text = str_word_count($pre_text , 1);
+    $text = str_word_count($pre_text , 1);
 
-$len = count($text);
- 
-echo "Original text: ".$pre_text." \n";
-echo "texto traducido: ";
-for ($i = 0; $i < $len; $i++){
+    $len = count($text);
 
-    $word = $text[$i];
-    strval($word);
-    $stmt = $conn->query("SELECT * FROM words WHERE TRIM(nahuatl) = '$word' ");
-    if ($row = $stmt->fetch()){
+    for ($i = 0; $i < $len; $i++){
 
-        echo $row['spanish'];
-        echo " ";
+        $word = $text[$i];
+        strval($word);
+        $stmt = $conn->query("SELECT * FROM words WHERE TRIM(spanish) = '$word' ");
+        if ($row = $stmt->fetch()){
+
+            echo $row['nahuatl'];
+            echo " ";
+        }else{
+
+            echo $word;
+            echo " ";
+
+        }
+
         
-
-    }else{
-
-        echo $word;
-        echo " ";
 
     }
 
+    
 }
 
